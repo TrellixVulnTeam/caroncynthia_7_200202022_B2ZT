@@ -7,12 +7,14 @@ const auth = require("../midleware/auth")
 
 // AFFICHER UN PROFIL //
 
-router.get("/:user_id", auth, async (req, res, next) =>{
+router.get("/:user_id", async (req, res, next) =>{
     try {
         const userId = parseInt(req.params.user_id);
 
         const profil = await pool.query('SELECT * FROM users WHERE user_id = $1', [userId]);
-        res.status(200).json(profil.rows)
+
+        console.log(profil.rows)
+        res.status(200).send("Profil récupéré avec succès")
         
     } catch (err) {
         console.error(err.message);
@@ -22,13 +24,14 @@ router.get("/:user_id", auth, async (req, res, next) =>{
 
 // MODIFIER UN PROFIL //
 
-router.put("/:user_id", auth, async (req, res, next) =>{
+router.put("/:user_id", async (req, res, next) =>{
     try {
         const userId = parseInt(req.params.user_id);
         const {username, bio, firstname, lastname} = req.body;
 
         const updateProfil = await pool.query('UPDATE users SET username = $2, bio = $3, firstname = $4, lastname =$5 WHERE user_id = $1', 
         [userId, username, bio, firstname, lastname]);
+
         res.status(200).send("Profil modifié avec succès")
         
     } catch (err) {
@@ -39,7 +42,7 @@ router.put("/:user_id", auth, async (req, res, next) =>{
 
 // SUPPRIMER UN PROFIL //
 
-router.delete("/:user_id", auth, async (req, res, next) =>{
+router.delete("/:user_id", async (req, res, next) =>{
     try {
         const userId = req.params.user_id;
 

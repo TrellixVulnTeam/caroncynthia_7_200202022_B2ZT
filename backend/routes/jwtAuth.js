@@ -25,7 +25,7 @@ router.post("/register", validInfo, async (req, res, next) =>{
 
 
         const token = jwtGenerator(newUser.rows[0].user_id)
-
+        console.log(token)
         res.status(200).send("Utilisateur enregistré avec succès")
 
     }catch(err){
@@ -55,6 +55,7 @@ if(!validPassword){
 
 const token = jwtGenerator(user.rows[0].user_id)
 
+console.log(token)
 res.status(200).send("Connection au profile réussie")
 
 
@@ -64,27 +65,15 @@ res.status(200).send("Connection au profile réussie")
 }
 })
 
-// AFFICHER UN PROFIL //
+router.get("/is-verify", auth, async (req, res, next) =>{
+    try{
+    
+        res.json(true)
 
-router.get("/:user_id", async (req, res, next) =>{
-    try {
-        const userId = parseInt(req.params.user_id);
-
-        const profil = pool.query('SELECT * FROM users WHERE user_id = $1', [userId]);
-        return profil[0]
-
-
-    } catch (err) {
+    }catch(err){
         console.error(err.message);
         res.status(500).send("Erreur serveur")
     }
-})
-// const getUserById = (req, res, next) =>{
-//     const id = parseInt(req.params.user_id);
-//     pool.query('SELECT * FROM users WHERE user_id = $1', [id], (error, results) =>{
-//         if (error) throw error;
-//         res.status(200).json(results.rows);
-//     });
-// };
+    })
 
 module.exports = router;
