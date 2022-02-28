@@ -20,7 +20,7 @@ router.get("/:user_id", async (req, res, next) =>{
         console.error(err.message);
         res.status(500).send("Erreur serveur")
     }
-})
+}) 
 
 // MODIFIER UN PROFIL //
 

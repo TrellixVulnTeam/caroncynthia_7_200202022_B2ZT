@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "node-sass": "^7.0.1",
+    "react-icons": "^4.3.1"
+  }
+}

@@ -1,0 +1,51 @@
+.home-page {
+  max-width: 1200px;
+  overflow: hidden;
+  margin: 58px auto 50px;
+  font-size: 16px;
+  font-family: $font-family;
+
+  .log-container {
+    display: grid;
+    grid-template-columns: 40% 60%;
+    .img-container {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      img {
+        width: 100%;
+        height: 500px;
+        object-fit: cover;
+      }
+    }
+    #email,
+    #password,
+    #lastname,
+    #firstname,
+    #username {
+      border: 2px solid $secondary;
+      border-radius: 10px;
+      padding: 0.8rem 6rem;
+      margin: 0 0 1rem 0;
+    }
+    #submit-btn {
+      background: #f9b8b1;
+      list-style-type: none;
+      font-family: $font-family;
+      font-size: 16px;
+      color: $black;
+      width: auto;
+      padding: 10px 10px;
+      border: 2px solid $secondary;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: 0.3s;
+      &:hover {
+        background: $primary;
+        color: $white;
+        border: 2px solid $primary;
+        box-shadow: 3px 3px 8px rgba(51, 51, 51, 0.418);
+      }
+    }
+  }
+}
