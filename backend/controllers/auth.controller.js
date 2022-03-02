@@ -1,21 +1,18 @@
-const router = require("express").Router();
 const pool = require("../dbconnection");
 const bcrypt = require("bcrypt");
-const jwtGenerator = require("../utils/jwtGenerator");
 const jwt = require("jsonwebtoken");
-const auth = require("../midleware/auth");
-const validInfo = require("../midleware/validInfo");
 
 const maxAge = 3 * 24 * 60 * 60 * 1000;
-const createToken = (id) => {
-  return jwt.sign({ id }, process.env.JWTSECRET, {
+const createToken = (user_id) => {
+  return jwt.sign({ user_id }, process.env.JWTSECRET, {
     expiresIn: maxAge,
   });
 };
 
 // S'ENREGISTRER //
 
-router.post("/register", validInfo, async (req, res, next) => {
+module.exports.signUp = async (req, res, next) => {
+  console.log(req.body);
   const { firstname, lastname, username, password, email } = req.body;
   try {
     const user = await pool.query("SELECT * FROM users WHERE email = $1", [
@@ -35,16 +32,15 @@ router.post("/register", validInfo, async (req, res, next) => {
       [firstname, lastname, username, passwordHash, email]
     );
 
-    res.status(200).send("Utilisateur enregistré avec succès");
+    res.status(201).json({ newUser: JSON.stringify(newUser.rows[0].user_id) });
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Erreur serveur");
+    res.status(200).send({ err });
   }
-});
+};
 
 // S'IDENTIFIER //
 
-router.post("/login", validInfo, async (req, res, next) => {
+module.exports.signIn = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
@@ -64,18 +60,16 @@ router.post("/login", validInfo, async (req, res, next) => {
 
     const token = createToken(user.rows[0].user_id);
     res.cookie("jwt", token, { httpOnly: true, maxAge });
-    res.status(200).json({ user: user.rows[0].user_id });
+    res.status(200).json({ user: JSON.stringify(user.rows[0].user_id) });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Erreur serveur");
   }
-});
+};
 
-router.get("/logout", (req, res, next) => {
+module.exports.logout = (req, res, next) => {
   return res
     .clearCookie("jwt")
     .status(200)
     .json({ message: "Déconnexion réalisée avec succès" });
-});
-
-module.exports = router;
+};

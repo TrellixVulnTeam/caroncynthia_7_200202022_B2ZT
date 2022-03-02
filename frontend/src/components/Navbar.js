@@ -1,21 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { UidContext } from "./AppContext";
 import Logout from "./Auth/Logout";
 
 const Navbar = () => {
-  var myHeaders = new Headers();
-
-  var requestOptions = {
-    method: "GET",
-    headers: myHeaders,
-    credentials: "include",
-    redirect: "follow",
-  };
-
-  fetch("http://localhost:5000/profil/user_id", requestOptions)
-    .then((response) => response.text())
-    .then((result) => console.log(result))
-    .catch((error) => console.log("error", error));
+  const userData = useSelector((state) => state.userReducer[0]);
 
   return (
     <nav>
@@ -28,28 +18,36 @@ const Navbar = () => {
             </div>
           </NavLink>
         </div>
-        <ul>
-          <li>
-            <NavLink exact to="/posts">
-              <h5>Posts</h5>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink exact to="/gifs">
-              <h5>Gifs</h5>
-            </NavLink>
-          </li>
-          <li className="welcome">
-            <NavLink exact to="/profil">
-              <h5>Bienvenue 'Valeur Dynamique'</h5>
-            </NavLink>
-          </li>
-          <li>
+        {userData ? (
+          <ul>
+            <li>
+              <NavLink exact to="/posts">
+                <h5>Posts</h5>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink exact to="/gifs">
+                <h5>Gifs</h5>
+              </NavLink>
+            </li>
+            <li className="welcome">
+              <NavLink exact to="/profil">
+                <h5>Bienvenue {userData.firstname}</h5>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink exact to="/">
+                <Logout />
+              </NavLink>
+            </li>
+          </ul>
+        ) : (
+          <ul>
             <NavLink exact to="/">
-              <Logout />
+              <h5>Se connecter</h5>
             </NavLink>
-          </li>
-        </ul>
+          </ul>
+        )}
       </div>
     </nav>
   );

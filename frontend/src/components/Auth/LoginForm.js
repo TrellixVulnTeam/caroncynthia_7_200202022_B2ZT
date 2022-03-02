@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getUser } from "../../actions/user.actions";
+import { useDispatch } from "react-redux";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
@@ -25,9 +28,10 @@ const LoginForm = () => {
       redirect: "follow",
     };
 
-    fetch(`${process.env.REACT_APP_API_URL}auth/login`, requestOptions)
+    fetch("http://localhost:5000/api/user/login", requestOptions)
       .then((response) => response.json())
       .then((result) => {
+        dispatch(getUser(result.user));
         navigate("/profil");
       })
       .catch((error) => console.log("error", error));

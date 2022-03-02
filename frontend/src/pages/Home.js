@@ -1,10 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import Auth from "../components/Auth";
-import { UidContext } from "../components/AppContext";
 
 const Home = () => {
-  const uid = useContext(UidContext);
-
   return (
     <div className="home-page">
       <div className="log-container">

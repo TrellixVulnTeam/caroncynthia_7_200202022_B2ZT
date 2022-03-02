@@ -1,15 +1,14 @@
-const jwt = require('jsonwebtoken');
-require('dotenv').config();
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
-
-function jwtGenerator(user_id){
-    const payload = {
- user: { 
-    id: user_id
- }
-};
-return jwt.sign(payload, process.env.JWTSECRET, {expiresIn: "24hr"})
-
+const maxAge = 3 * 24 * 60 * 60 * 1000;
+function createToken(user_id) {
+  const payload = {
+    user: user_id,
+  };
+  return jwt.sign({ user_id }, process.env.JWTSECRET, {
+    expiresIn: maxAge,
+  });
 }
 
-module.exports = jwtGenerator;
+module.exports = createToken;

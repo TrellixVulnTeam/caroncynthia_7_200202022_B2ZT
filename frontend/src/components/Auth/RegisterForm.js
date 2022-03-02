@@ -25,7 +25,7 @@ const RegisterForm = () => {
       redirect: "follow",
     };
 
-    fetch(`${process.env.REACT_APP_API_URL}auth/register`, requestOptions)
+    fetch(`${process.env.REACT_APP_API_URL}api/user/register`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);

@@ -7,7 +7,7 @@ const Logout = () => {
       cookie.remove(key, { expires: 1 });
     }
   };
-  const logout = () => {
+  const logout = async () => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
@@ -18,7 +18,10 @@ const Logout = () => {
       redirect: "follow",
     };
 
-    fetch(`${process.env.REACT_APP_API_URL}auth/logout`, requestOptions)
+    await fetch(
+      `${process.env.REACT_APP_API_URL}api/user/logout`,
+      requestOptions
+    )
       .then((response) => response.text())
       .then(() => removeCookie("jwt"))
       .catch((error) => console.log("error", error));
