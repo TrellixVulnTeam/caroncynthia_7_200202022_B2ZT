@@ -22,6 +22,7 @@ const App = () => {
     fetch(`${process.env.REACT_APP_API_URL}jwtid`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
+        console.log(result);
         setUid(result);
         dispatch(getUser(result));
       })

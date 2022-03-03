@@ -24,8 +24,8 @@ module.exports.userInfo = async (req, res, next) => {
       userId,
     ]);
 
-    console.log(profil.rows);
-    res.status(200).send(profil.rows);
+    console.log(profil.rows[0]);
+    res.status(200).send(profil.rows[0]);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Erreur serveur");
@@ -43,8 +43,7 @@ module.exports.updateUser = async (req, res, next) => {
       "UPDATE users SET bio = $2 WHERE user_id = $1",
       [userId, bio]
     );
-
-    res.status(200).send("Profil modifié avec succès");
+    res.status(200).send(bio);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Erreur serveur");
@@ -62,6 +61,7 @@ module.exports.deleteUser = async (req, res, next) => {
       [userId]
     );
     res.status(200).send("Profil supprimé avec succès");
+    res.clearCookie("jwt");
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Erreur serveur");
