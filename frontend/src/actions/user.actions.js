@@ -9,7 +9,6 @@ export const getUser = (uid) => {
     return axios
       .get(`${process.env.REACT_APP_API_URL}api/user/${uid}`)
       .then((res) => {
-        console.log(res);
         dispatch({ type: GET_USER, payload: res.data });
       })
       .catch((err) => console.log(err));
@@ -24,7 +23,6 @@ export const updateBio = (userId, bio) => {
         url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
         data: { bio },
       });
-      console.log(res);
       dispatch({ type: UPDATE_BIO, payload: res.data });
     } catch (err) {
       return console.log(err);

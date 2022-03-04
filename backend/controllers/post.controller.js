@@ -4,9 +4,9 @@ const pool = require("../dbconnection");
 
 module.exports.readAllPosts = async (req, res, next) => {
   try {
-    const allPosts = await pool.query("SELECT * FROM posts");
-
-    console.log(allPosts.rows);
+    const allPosts = await pool.query(
+      "SELECT * FROM posts ORDER BY created_at DESC"
+    );
     res.status(200).json(allPosts.rows);
   } catch (err) {
     console.error(err.message);
@@ -37,16 +37,16 @@ module.exports.readAllPosts = async (req, res, next) => {
 
 module.exports.createPost = async (req, res, next) => {
   try {
-    const { title, content, media } = req.body;
+    const { title, content } = req.body;
     const id = req.body.user_id;
 
     const newPost = await pool.query(
-      "INSERT INTO posts (title, content, media, user_id) VALUES ($1, $2, $3, $4) RETURNING *",
-      [title, content, media, id]
+      "INSERT INTO posts (title, content, user_id) VALUES ($1, $2, $3) RETURNING *",
+      [title, content, id]
     );
 
     console.log(newPost.rows[0]);
-    res.status(200).send("Post créé avec succès");
+    res.status(200).json({ newUser: JSON.stringify(newPost.rows[0]) });
   } catch (err) {
     console.error(err.message);
 
@@ -59,12 +59,11 @@ module.exports.createPost = async (req, res, next) => {
 module.exports.updatePost = async (req, res, next) => {
   try {
     const postId = req.params.post_id;
-    const userId = req.body.user_id;
-    const { title, content, media } = req.body;
+    const content = req.body.content;
 
     const updatePost = await pool.query(
-      "UPDATE posts SET title = $1, content = $2, media =$3 WHERE post_id =$4 and user_id = $5 RETURNING *",
-      [title, content, media, postId, userId]
+      "UPDATE posts SET content = $1 WHERE post_id =$2 RETURNING *",
+      [content, postId]
     );
 
     if (updatePost.rows.length === 0) {
@@ -73,7 +72,7 @@ module.exports.updatePost = async (req, res, next) => {
       );
     }
 
-    res.status(200).send("Post modifié avec succès");
+    res.status(200).send(content);
   } catch (err) {
     console.error(err.message);
     res.status(500).json("Erreur server");
@@ -85,11 +84,10 @@ module.exports.updatePost = async (req, res, next) => {
 module.exports.deletePost = async (req, res, next) => {
   try {
     const postId = req.params.post_id;
-    const userId = req.body.user_id;
 
     const deletePost = await pool.query(
-      "DELETE FROM posts WHERE post_id = $1 and user_id = $2 RETURNING *",
-      [postId, userId]
+      "DELETE FROM posts WHERE post_id = $1 RETURNING *",
+      [postId]
     );
 
     if (deletePost.rows.length === 0) {
@@ -97,7 +95,7 @@ module.exports.deletePost = async (req, res, next) => {
         "Ce post n'est pas le votre, vous ne pouvez pas le supprimer"
       );
     }
-
+    console.log(postId);
     res.status(200).send("Post supprimé avec succès");
   } catch (err) {
     console.error(err.message);

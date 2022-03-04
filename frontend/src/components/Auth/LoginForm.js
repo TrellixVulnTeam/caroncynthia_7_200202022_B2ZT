@@ -31,7 +31,7 @@ const LoginForm = () => {
     fetch("http://localhost:5000/api/user/login", requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        dispatch(getUser(result));
+        dispatch(getUser(result.user_id));
         navigate("/profil");
       })
       .catch((error) => console.log("error", error));

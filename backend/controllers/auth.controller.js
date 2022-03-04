@@ -60,7 +60,7 @@ module.exports.signIn = async (req, res, next) => {
 
     const token = createToken(user.rows[0].user_id);
     res.cookie("jwt", token, { httpOnly: true, maxAge });
-    res.status(200).json(user.rows[0].user_id);
+    res.status(200).json(user.rows[0]);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Erreur serveur");

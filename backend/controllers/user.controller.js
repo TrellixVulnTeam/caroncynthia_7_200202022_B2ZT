@@ -5,8 +5,7 @@ const pool = require("../dbconnection");
 module.exports.getAllUsers = async (req, res, next) => {
   try {
     const allUsers = await pool.query("SELECT * FROM users");
-
-    res.status(200).json(allUsers);
+    res.status(200).send(allUsers.rows);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Erreur serveur");

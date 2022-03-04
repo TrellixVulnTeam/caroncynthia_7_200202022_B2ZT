@@ -26,7 +26,7 @@ app.use(cookieParser());
 
 app.get("*", checkUser);
 app.get("/jwtid", requireAuth, (req, res) => {
-  res.status(200).json(res.locals.user.rows[0].user_id);
+  res.status(200).json(res.locals.user.rows[0]);
 });
 
 // ROUTES //
