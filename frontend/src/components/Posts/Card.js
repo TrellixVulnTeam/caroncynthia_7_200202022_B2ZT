@@ -25,7 +25,7 @@ const Card = ({ post }) => {
   }, [usersData]);
 
   return (
-    <li className="card-container" key={post.post_id}>
+    <li className="card-container" key={post.post_id} id={post.post_id}>
       {isLoading ? (
         <i className="fas fa-spinner fa-spin"></i>
       ) : (
@@ -65,7 +65,15 @@ const Card = ({ post }) => {
               </div>
             )}
           </div>
-          {userData.user_id === post.user_id && (
+          {userData.user_id === post.user_id && !userData.isadmin && (
+            <div className="update-delete-container">
+              <div onClick={() => setIsUpdated(!isUpdated)}>
+                <i class="fa-regular fa-pen-to-square"></i>
+              </div>
+              <DeleteCard id={post.post_id} />
+            </div>
+          )}
+          {userData.isadmin && (
             <div className="update-delete-container">
               <div onClick={() => setIsUpdated(!isUpdated)}>
                 <i class="fa-regular fa-pen-to-square"></i>

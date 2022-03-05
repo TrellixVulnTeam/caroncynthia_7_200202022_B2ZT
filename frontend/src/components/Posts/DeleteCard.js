@@ -12,7 +12,8 @@ const DeleteCard = (props) => {
     dispatch(deletePost(props.id));
     dispatch(getPosts());
     window.confirm("Votre post a été supprimé");
-    navigate("/posts");
+    // navigate("/posts");
+    document.getElementById(props.id).remove();
   };
 
   return (

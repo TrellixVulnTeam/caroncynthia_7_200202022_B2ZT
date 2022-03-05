@@ -13,10 +13,11 @@ const NewPostForm = () => {
 
   const handlePost = async () => {
     if (content || title) {
-      const data = new FormData();
-      data.append("user_id", userData.user_id);
-      data.append("content", content);
-      data.append("title", title);
+      const data = {
+        user_id: userData.user_id,
+        content: content,
+        title: title,
+      };
 
       await dispatch(addPost(data));
       dispatch(getPosts());
