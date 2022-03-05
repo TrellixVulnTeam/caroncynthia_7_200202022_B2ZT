@@ -1,0 +1,80 @@
+@media all and (max-width: 1025px) {
+  // Medias register/login form
+  .home-page {
+    .log-container {
+      display: flex;
+      flex-direction: column;
+      margin: 1rem;
+      .connection-form {
+        width: 100%;
+        .form-container {
+          #register-form {
+            #email,
+            #password,
+            #lastname,
+            #firstname,
+            #username {
+              border: 2px solid $secondary;
+              border-radius: 10px;
+              padding: 0.8rem;
+              margin: 0 0 1rem 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Médias navbar
+  .nav-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    ul {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      .welcome {
+        h5 {
+          padding: 0;
+        }
+      }
+    }
+  }
+  // Médias profil page
+  .profil-container {
+    .profil-info {
+      min-width: auto;
+      .bio-update {
+        textarea {
+          min-width: auto;
+        }
+      }
+    }
+  }
+
+  // Médias newPostForm
+  .new-post {
+    .post-container {
+      min-width: auto;
+    }
+    .post-form {
+      .card-container {
+        .card-header {
+          display: flex;
+          flex-wrap: wrap;
+          margin-bottom: 1.5rem;
+        }
+      }
+    }
+  }
+  .posts {
+    margin: 2rem;
+    .card-username {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+  }
+}

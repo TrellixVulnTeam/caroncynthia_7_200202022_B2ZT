@@ -1,6 +1,6 @@
 .nav-container {
   display: grid;
-  grid-template-columns: 15% 85%;
+  grid-template-columns: 18% 1fr;
   gap: 4rem;
   font-family: $font-family;
   font-weight: 400;
@@ -47,8 +47,10 @@
       }
       .fa-solid {
         color: $black;
-        font-size: 20px;
+        font-size: 26px;
         transition: 0.3s;
+        display: flex;
+        justify-content: flex-end;
         &:hover {
           color: $primary;
         }
@@ -61,7 +63,6 @@
         padding-left: 10rem;
         display: flex;
         justify-content: flex-end;
-        margin-right: 4rem;
       }
     }
   }
