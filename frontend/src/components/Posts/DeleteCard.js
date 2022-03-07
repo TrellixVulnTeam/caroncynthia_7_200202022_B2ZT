@@ -10,10 +10,10 @@ const DeleteCard = (props) => {
 
   const deleteQuote = async () => {
     dispatch(deletePost(props.id));
-    dispatch(getPosts());
     window.confirm("Votre post a été supprimé");
-    // navigate("/posts");
     document.getElementById(props.id).remove();
+    dispatch(getPosts());
+    navigate("/posts");
   };
 
   return (
