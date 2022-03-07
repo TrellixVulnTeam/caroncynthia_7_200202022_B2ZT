@@ -28,7 +28,7 @@
       }
       a {
         text-decoration: none;
-        color: $primary;
+        color: $black;
         h3 {
           font-size: 26px;
           font-weight: 500;
@@ -68,7 +68,7 @@
         h3 {
           display: flex;
           justify-content: flex-start;
-          color: $primary;
+          color: $black;
           font-weight: 600;
         }
         .post-date {
@@ -76,7 +76,7 @@
           justify-content: flex-end;
           font-style: italic;
           font-size: 14px;
-          color: #2121219c;
+          color: $black;
         }
       }
       .content {
