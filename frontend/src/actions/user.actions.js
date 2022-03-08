@@ -20,6 +20,7 @@ export const updateBio = (userId, bio) => {
     try {
       const res = await axios({
         method: "put",
+        withCredentials: true,
         url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
         data: { bio },
       });
@@ -34,6 +35,7 @@ export const deleteUser = (userId) => {
   return (dispatch) => {
     return axios({
       method: "delete",
+      withCredentials: true,
       url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
     })
       .then((res) => {

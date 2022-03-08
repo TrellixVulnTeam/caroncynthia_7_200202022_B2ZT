@@ -3,8 +3,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const maxAge = 3 * 24 * 60 * 60 * 1000;
-const createToken = (user_id) => {
-  return jwt.sign({ user_id }, process.env.JWTSECRET, {
+const createToken = (user_id, isadmin) => {
+  return jwt.sign({ user_id, isadmin }, process.env.JWTSECRET, {
     expiresIn: maxAge,
   });
 };
@@ -58,7 +58,7 @@ module.exports.signIn = async (req, res, next) => {
       return res.status(401).send("Identifiants incorrects");
     }
 
-    const token = createToken(user.rows[0].user_id);
+    const token = createToken(user.rows[0].user_id, user.rows[0].isadmin);
     res.cookie("jwt", token, { httpOnly: true, maxAge });
     res.status(200).json(user.rows[0]);
   } catch (err) {

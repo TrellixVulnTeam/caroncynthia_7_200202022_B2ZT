@@ -42,7 +42,13 @@ module.exports.updateUser = async (req, res, next) => {
       "UPDATE users SET bio = $2 WHERE user_id = $1",
       [userId, bio]
     );
-    res.status(200).send(bio);
+    if (updateProfil.rows[0].user_id === req.token || req.isadmin === true) {
+      res.status(200).send(bio);
+    } else {
+      return res.json(
+        "Ce profil n'est pas le votre, vous ne pouvez pas le modifier"
+      );
+    }
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Erreur serveur");
@@ -59,7 +65,13 @@ module.exports.deleteUser = async (req, res, next) => {
       "DELETE FROM users WHERE user_id = $1",
       [userId]
     );
-    res.status(200).send("Profil supprimé avec succès");
+    if (deleteProfil.rows[0].user_id === req.token || req.isadmin === true) {
+      res.status(200).send(bio);
+    } else {
+      return res.json(
+        "Ce profil n'est pas le votre, vous ne pouvez pas le supprimer"
+      );
+    }
     res.clearCookie("jwt");
   } catch (err) {
     console.error(err.message);

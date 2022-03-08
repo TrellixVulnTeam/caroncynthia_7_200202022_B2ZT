@@ -66,13 +66,15 @@ module.exports.updatePost = async (req, res, next) => {
       [content, postId]
     );
 
-    if (updatePost.rows.length === 0) {
+    console.log(req.body);
+    console.log(updatePost.rows[0].user_id);
+    if (updatePost.rows[0].user_id === req.token || req.isadmin === true) {
+      res.status(200).send(content);
+    } else {
       return res.json(
         "Ce post n'est pas le votre, vous ne pouvez pas le modifier"
       );
     }
-
-    res.status(200).send(content);
   } catch (err) {
     console.error(err.message);
     res.status(500).json("Erreur server");
@@ -90,13 +92,13 @@ module.exports.deletePost = async (req, res, next) => {
       [postId]
     );
 
-    if (deletePost.rows.length === 0) {
+    if (deletePost.rows[0].user_id === req.token || req.isadmin === true) {
+      res.status(200).send("ce post a bien été supprimé");
+    } else {
       return res.json(
         "Ce post n'est pas le votre, vous ne pouvez pas le supprimer"
       );
     }
-    console.log(postId);
-    res.status(200).send("Post supprimé avec succès");
   } catch (err) {
     console.error(err.message);
     res.status(500).json("Erreur server");

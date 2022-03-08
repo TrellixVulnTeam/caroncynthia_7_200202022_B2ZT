@@ -1,19 +1,14 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { deletePost, getPosts } from "../../actions/posts.actions";
 
 const DeleteCard = (props) => {
   const dispatch = useDispatch();
 
-  const navigate = useNavigate();
-
   const deleteQuote = async () => {
     dispatch(deletePost(props.id));
     window.confirm("Votre post a été supprimé");
-    document.getElementById(props.id).remove();
     dispatch(getPosts());
-    navigate("/posts");
   };
 
   return (

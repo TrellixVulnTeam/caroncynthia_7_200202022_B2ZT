@@ -33,6 +33,8 @@ module.exports.requireAuth = (req, res, next) => {
         console.log(err);
       } else {
         console.log(decodedToken.user_id);
+        req.token = decodedToken.user_id;
+        req.isadmin = decodedToken.isadmin;
         next();
       }
     });
@@ -40,4 +42,3 @@ module.exports.requireAuth = (req, res, next) => {
     console.log("no token");
   }
 };
-

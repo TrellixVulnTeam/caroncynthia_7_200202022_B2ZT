@@ -21,7 +21,9 @@ export const getPosts = () => {
 export const addPost = (data) => {
   return (dispatch) => {
     return axios
-      .post(`${process.env.REACT_APP_API_URL}api/post/`, data)
+      .post(`${process.env.REACT_APP_API_URL}api/post/`, data, {
+        withCredentials: true,
+      })
       .then((res) => {
         console.log(data);
         dispatch({ type: ADD_POST, payload: data });
@@ -34,6 +36,7 @@ export const updatePost = (postId, content) => {
   return (dispatch) => {
     return axios({
       method: "put",
+      withCredentials: true,
       url: `${process.env.REACT_APP_API_URL}api/post/` + postId,
       data: { content },
     })
@@ -50,6 +53,7 @@ export const deletePost = (postId) => {
   return (dispatch) => {
     return axios({
       method: "delete",
+      withCredentials: "true",
       url: `${process.env.REACT_APP_API_URL}api/post/` + postId,
     })
       .then((res) => {

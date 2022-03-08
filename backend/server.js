@@ -13,7 +13,7 @@ const corsOptions = {
   origin: process.env.CLIENT_URL,
   credentials: true,
   allowedHeaders: ["sessionId", "Content-Type"],
-  exposedHeaders: ["sessionId"],
+  exposedHeaders: ["sessionId", "set-cookie"],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   preflightContinue: false,
 };
@@ -25,7 +25,10 @@ app.use(cookieParser());
 // JWT //
 
 app.get("*", checkUser);
-app.get("/jwtid", requireAuth, (req, res) => {
+app.get("/jwtid", (req, res) => {
+  res.status(200).json(res.locals.user.rows[0]);
+});
+app.post("/jwtid", (req, res) => {
   res.status(200).json(res.locals.user.rows[0]);
 });
 
