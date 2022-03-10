@@ -39,9 +39,10 @@ module.exports.updateUser = async (req, res, next) => {
     const { bio } = req.body;
 
     const updateProfil = await pool.query(
-      "UPDATE users SET bio = $2 WHERE user_id = $1",
+      "UPDATE users SET bio = $2 WHERE user_id = $1 RETURNING *",
       [userId, bio]
     );
+    console.log(updateProfil);
     if (updateProfil.rows[0].user_id === req.token || req.isadmin === true) {
       res.status(200).send(bio);
     } else {

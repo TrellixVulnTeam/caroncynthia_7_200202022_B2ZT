@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteUser, updateBio } from "../../actions/user.actions";
+import { deleteUser, getUser, updateBio } from "../../actions/user.actions";
 
 const UpdateProfil = () => {
   const [bio, setBio] = useState("");
